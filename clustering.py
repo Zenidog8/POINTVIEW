@@ -1,7 +1,6 @@
 from random import randint
 from math import sqrt
-
-infinito = 9223372036854775807
+import numpy as np
 
 
 def generarPuntos(cantidad):
@@ -14,6 +13,9 @@ def generarPuntos(cantidad):
             tmp.append(x)
             tmp.append(y)
             matriz.append(tmp)
+    else:
+        print("El algoritmo seria muy lento para graficar")
+        print("Use una cantidad positiva menor a 100")
 
     return matriz
 
@@ -69,7 +71,7 @@ def actualizarVectores(vectores, reps, matriz):
 
 
 def miminino(vectores, punto):
-    mini = infinito
+    mini = np.inf
     for i in range(len(vectores)):
         mini = min(mini, d(vectores[i], punto))
 
@@ -125,7 +127,7 @@ def calcularRij(matriz, puntos, reps, i, j):
 
 
 def calcularRi(matriz, puntos, reps):
-    maxR = -1000000000000
+    maxR = -np.inf
     for i in range(len(reps)):
         for j in range(len(reps)):
             if i != j:
@@ -158,22 +160,4 @@ def calcularRk(p):
 
 
 def combinarLista(a, b):
-    for i in range(len(b)):
-        a.append(b[i])
-
-    return a
-
-# ---------------------------
-# Funciones de prueba
-# ---------------------------
-def imprimirPuntos(matriz):
-    for i in range(0, len(matriz)):
-        print(str(matriz[i][0]) + " " + str(matriz[i][1]))
-
-
-def imprimirMatriz(matriz):
-    for i in range(len(matriz)):
-        for j in range(len(matriz[i])):
-            print(matriz[i][j])
-
-        print("")
+    return a + b

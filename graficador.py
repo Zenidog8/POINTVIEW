@@ -1,8 +1,7 @@
 import turtle
-from heapq import merge
 import clustering as clus
 
-# Seteo algunas cosas
+
 colores = ["green","blue","orange","orchid","cyan","pink","yellow","purple","crimson","brown","red","black","white"]
 ventana = turtle.Screen()
 ventana.setup(500, 500, 400, 200)
@@ -60,6 +59,7 @@ def limpiarReps(reps):
     for e in range(len(reps)):
         dibujar_punto(reps[e][0], reps[e][1], colores.index("white"))
 
+
 def escribir_k(p):
     '''
     Escribe en la esquina superior izquierda del plano el area del poligono
@@ -73,39 +73,27 @@ def escribir_k(p):
     tortu.pendown()
     tortu.write(salida + str(k), False, align="center")
 
+
 def escribir_iteracion(i):
     '''
     Escribe en la esquina superior izquierda del plano el area del poligono
     '''
-    salida = "Iteracion: "
+    tortu.color("white")
+    tortu.speed(0)
+    tortu.penup()
+    tortu.setpos(200, 200)
+    tortu.pendown()
+    tortu.write("Iteracion: " + str(i - 1), False, align="center")
+
     tortu.color("black")
     tortu.speed(0)
     tortu.penup()
     tortu.setpos(200, 200)
     tortu.pendown()
-    tortu.write(salida + str(i), False, align="center")
+    tortu.write("Iteracion: " + str(i), False, align="center")
 
-def dibujar_rectangulo():
-    # Clear text
-    tortu1 = turtle.Turtle()
-    tortu1.ht()
-    tortu1.penup()
-    tortu1.setpos(200,200)
-    tortu1.pendown()
-    tortu1.color(turtle.bgcolor())
-    tortu1.begin_fill()
-    tortu1.fd(100)
-    tortu1.setheading(90)
-    tortu1.fd(30)
-    tortu1.setheading(180)
-    tortu1.fd(110)
-    tortu1.setheading(270)
-    tortu1.fd(30)
-    tortu1.setheading(0)
-    tortu1.fd(10)
-    tortu1.end_fill()
 
-def main(pCantidad, k):
+def graficarKMeans(pCantidad, k):
     i = 1
     escribir_iteracion(i)
     i = i + 1
@@ -120,25 +108,17 @@ def main(pCantidad, k):
         graficar_grupos(p, m)
         graficar_reps(reps)
         q = clus.calcularQ(m, p, reps)
-        #print(str(q) +"hola")
-        dibujar_rectangulo()
         escribir_iteracion(i)
         limpiarReps(reps)
         graficar_grupos(p, m)
         reps = clus.actualizarVectores(p, reps, m)
         k = clus.calcularQ(m, p, reps)
-        #print(str(k) + "\n")
         graficar_reps(reps)
         diferencia = q - k
         if diferencia <  0.001 and diferencia > -0.001:
             terminado = True
         i = i+1
 
-    print("Fin")
-
+    print("Fin, puede cerrar la ventana emergente")
     escribir_k(p)
-
     ventana.exitonclick()
-
-if __name__ == '__main__':
-    main()
